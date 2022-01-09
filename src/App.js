@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import  { useEffect, useState } from 'react';
+import axios from "axios";
+import CardList from './components/CardList';
+import "./App.css";
+import SearchBox from './components/SearchBox';
 
-function App() {
+ const App = () =>  {
+
+  const [user, setUser] = useState([]);
+  const [searchField, setSearchField] = useState('')
+  const FilteredUsers = user.filter( user =>
+    user.name.toLowerCase().includes(searchField.toLowerCase())
+    )
+
+
+  useEffect( () => {
+      axios.get('https://jsonplaceholder.typicode.com/users')
+      .then(res =>{
+        console.log(res);
+        setUser(res.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  } , [])
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+   <SearchBox handleChange={e => setSearchField(e.target.value)}/>   {/*pass in the function with props into the search components */}
+     <CardList users={FilteredUsers}/>  {/* pass in the state as props into cardlist components */}
     </div>
   );
 }
 
-export default App;
+
+export default App
+
