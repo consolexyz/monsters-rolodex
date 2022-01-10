@@ -28,6 +28,7 @@ import SearchBox from './components/SearchBox';
 
   return (
     <div className="App">
+      <h1>MONSTERS ROLODEX</h1>
    <SearchBox handleChange={e => setSearchField(e.target.value)}/>   {/*pass in the function with props into the search components */}
      <CardList users={FilteredUsers}/>  {/* pass in the state as props into cardlist components */}
     </div>
